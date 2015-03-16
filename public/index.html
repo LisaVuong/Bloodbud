@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel = "stylesheet" type = "text/css" href = "css/styles.css">
+		<link rel="stylesheet" type="text/css" href="css/default.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" /> <!-- button styles? -->
+		<link rel="stylesheet" type="text/css" href="css/animations.css" /> <!-- slide animation -->
+        <link rel="stylesheet" type="text/css" href="css/default1.css" />
+		<link rel="stylesheet" type="text/css" href="css/component1.css" /> <!-- button styles? -->
+        <script src="js/modernizr.custom.js"></script>
+	</head>
+	<body>
+        <div id="pt-main" class="pt-perspective" data-animation= "3">
+            <div class = "pt-page">
+                <div class = "navigation">
+                    <div class = "navigationContent">
+                        <img src = "img/bb_logoPink.png" height= "35%"; width= "13%";>
+                        <div class = "navOptions">
+                            <ul class = "navTextSpacing">
+                                <li class = "navSpacing"><a href="default.asp">About Us</a></li>
+                                <li class = "navSpacing"><a href="news.asp">Glossary</a></li>
+                                <li class = "navSpacing"><a href="contact.asp">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class = "main">
+                    <div class = "box">
+                        <p >Periods are hard to talk about.<br /> We're here to help. Send someone a card to start the conversation.</p>
+                    </div>
+                </div>
+                    <button id="iterateEffects" class="pt-touch-button button"><p class = "btnText">Create a Card </p></button>
+                <div class = "callToAction">
+                    <div class = "browseText">
+                        <p>Browse Cards</p>
+                    </div>
+                    <div class = "browseButton">
+                        <img src = "img/browse_icon.png" width = "16px" height = "16px">
+                    </div>
+                </div>
+            </div>
+    <!-- second page -->
+            <div id = "imageOption" class="pt-page createPage">
+                <div class = logoRow>
+                    <img style = "margin-top: 0.5em;"src = "img/bb_logoWhite.png" height= "20%" width = "10%">
+                    <div id="iterateEffects1" class = "cancel pt-touch-button sendButton" style = "margin-right: 50px; display: inline;">
+                        <div class = "cancelButton" style = "display: inline;float: right; margin-left: 10px; color: white; margin-top: 0.4em;">Cancel</div>
+                        <img src = "img/cancel_icon.png" height= "20px" width = "20px" style = "float: right; margin-top: 0.5em;">
+                    </div>
+                </div>
+                <div class = "cardRow">
+                    <div class = "cardRowText">
+                        <p ><span id = "nounPhrase" class = "dropdown">I'm on my period</span></p>
+                    </div>
+                    <div class = "cardRowText">
+                        <p > and I want you to <span id = "verbPhrase" class = "dropdown">talk to</span></p>
+                    </div>
+                    <div class = "cardRowText">
+                        <p >  me <span id = "subjectPhrase" class = "dropdown">about it</span></p>
+                    </div>
+                </div>
+                <div class = "optionRow">
+                    <div class = "colorOptions">
+                        <p>Background Color</p>
+                        <div class = "colors">
+                            <div id = "blueColorButton" class="round-button blue"><div class="round-button-circle-blue"><a  class="round-button"></a></div></div>
+                            <div id = "yellowColorButton" class="round-button yellow"><div class="round-button-circle-yellow"><a  class="round-button"></a></div></div>
+                            <div id = "pinkColorButton" class="round-button pink"><div class="round-button-circle-pink"><a class="round-button"></a></div></div>
+                            <div id = "redColorButton" class="round-button red"><div class="round-button-circle-red"><a class="round-button"></a></div></div>
+                        </div>
+                    </div>
+                    <div class = "postOptions">
+                        <div class = sendOption>
+                            <button  data-modal="modal-1" class="md-trigger md-setperspective sendButton"><p class = "btnText1">Send! </p></button>
+                        </div>
+                    </div>
+                </div>
+                <div class = "imageRow">
+                    <div class="md-modal md-effect-1" id="modal-1" style = "width:70%; min-height: 60%; top: 40%; ">
+                        <div id = "modalContent" class="md-content">
+                            
+                            <div >
+								<div  style = "display:inline-block; width: 100%;">
+                                	<span><p id = "replaceSendText" class = "sendText" style = "float: left;">SEND YOUR CARD!</p> <p id = "createAnother" class = "md-close" style = "float: right;">CANCEL</p></span>
+								</div>
+								<div>
+									<h1  id = "thankYouText" >THANK YOU!</h1>
+								</div>
+								<div id = "replaceText" style = "display: inline-block; width: 100%;">
+                                <form><span class = "modalText">WHAT IS YOUR NAME? </span><br /> <input type = "text" placeholder = "Lisa Vuong" name = "emailAddress"></form>
+                                <form><span class = "modalText">WHO ARE YOU SENDING THIS TO?</span> <br /> <input type = "text" placeholder = "Austin Chung" name = "emailAddress"></form>
+                                <form><span class = "modalText">WHAT IS THEIR EMAIL? </span><br /> <input type = "text" placeholder = "gmail.com" name = "emailAddress"></form>
+								
+
+                               <button onclick = "thankYou()" class="sendButton1" style = " display: inline;">Send Letter!</button>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/classie.js"></script>
+        <script src="js/modalEffects.js"></script>
+      
+	
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="js/jquery.dlmenu.js"></script> <!--essential -->
+		<script src="js/pagetransitions.js"></script> <!-- essential -->
+	</body>
+</html>

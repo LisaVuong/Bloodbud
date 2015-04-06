@@ -11,6 +11,10 @@
         <link rel="stylesheet" type="text/css" href="css/default1.css" />
 		<link rel="stylesheet" type="text/css" href="css/component1.css" /> <!-- button styles? -->
         <script src="js/modernizr.custom.js"></script>
+		<script src="ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script type="text/javascript" src="https://mandrillapp.com/api/docs/js/mandrill.js"></script>
+		<script type="text/javascript" src="js/email.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 	</head>
 	<body>
         <div id="pt-main" class="pt-perspective" data-animation= "3">
@@ -82,20 +86,20 @@
                     <div class="md-modal md-effect-1" id="modal-1" style = "width:70%; min-height: 60%; top: 40%; ">
                         <div id = "modalContent" class="md-content">
                             
-                            <div >
-								<div  style = "display:inline-block; width: 100%;">
-                                	<span><p id = "replaceSendText" class = "sendText" style = "float: left;">SEND YOUR CARD!</p> <p id = "createAnother" class = "md-close" style = "float: right;">CANCEL</p></span>
+                            <div style = "background-color: #dedede;">
+								<div  style = "display:inline-block; width: 100%; ">
+                                	<span><p id = "replaceSendText" class = "sendText" style = "float: left;">SEND YOUR CARD!</p> <p id = "createAnother" class = "md-close" style = "float: right; cursor: pointer;">CANCEL</p></span>
 								</div>
 								<div>
 									<h1  id = "thankYouText" >THANK YOU!</h1>
 								</div>
 								<div id = "replaceText" style = "display: inline-block; width: 100%;">
-                                <form><span class = "modalText">WHAT IS YOUR NAME? </span><br /> <input type = "text" placeholder = "Lisa Vuong" name = "emailAddress"></form>
-                                <form><span class = "modalText">WHO ARE YOU SENDING THIS TO?</span> <br /> <input type = "text" placeholder = "Austin Chung" name = "emailAddress"></form>
-                                <form><span class = "modalText">WHAT IS THEIR EMAIL? </span><br /> <input type = "text" placeholder = "gmail.com" name = "emailAddress"></form>
+                                <form><span class = "modalText">WHAT IS YOUR NAME? </span><br /> <input style = "background-color: #dedede;" type = "text" placeholder = "Lisa Vuong" name = "senderName" id = "senderName"/></form>
+                                <form><span class = "modalText">WHO ARE YOU SENDING THIS TO?</span> <br /> <input style = "background-color: #dedede;" type = "text" placeholder = "Austin Chung" name = "receiverName" id = "receiverName"></form>
+                                <form><span class = "modalText">WHAT IS THEIR EMAIL? </span><br /> <input style = "background-color: #dedede;" type = "text" placeholder = "gmail.com" name = "receiverEmail" id = "receiverEmail"></form>
 								
 
-                               <button onclick = "thankYou()" class="sendButton1" style = " display: inline;">Send Letter!</button>
+                               <button onclick = "sendMail();" class="sendButton1" style = " display: inline; font-size: 120%;" id = "mandrill">Send Letter!</button>
 								</div>
                             </div>
                         </div>
@@ -103,6 +107,8 @@
                 </div>
             </div>
         </div>
+
+		
         <script src="js/classie.js"></script>
         <script src="js/modalEffects.js"></script>
       

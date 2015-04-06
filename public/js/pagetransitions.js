@@ -9,12 +9,6 @@
  * http://www.codrops.com
  */
 
-function thankYou(){
-	document.getElementById("createAnother").innerHTML = "Create another card";
-	$("#thankYouText").css('display','inline-block');
-	$("#replaceText").css('visibility','hidden');
-	$("#replaceSendText").css('display','none');
-}
 
 var ModalEffects = (function() {
 
@@ -74,8 +68,155 @@ var ModalEffects = (function() {
 
 var nounPhrases = ["I'm on my period", "It's shark week", "I'm parting the red sea", "There's a crime scene in my pants", "Auntie Flo is in the house",
                   "Mother nature gave me a gift", "I'm walking down the red carpet", "I'm riding the crimson wave", "I'm raising the red Flag", 
-                   "The big red monster is in town", "It's that time of the month"]
-var currentNounPhrase = 1
+                   "The big red monster is in town", "It's that time of the month"];
+var currentNounPhrase = 0;
+
+var verbPhrases = ["talk to", "discuss with", "explain to", "buy", "sell", "give", "lend"];
+var currentVerbPhrase = 0;
+
+var subjectPhrases = ["it", "what to do", "tampons", "pads", "pooter plugs", "bloodplugs", "rags", "P's", "T's"];
+var currentSubjectPhrase = 0;
+
+var currentColor = "pink";
+
+function getColor(){
+	switch(currentColor){
+	case "blue":
+			return '#27a9e1';
+	case "red":
+			return '#be1e2d';
+	case "pink":
+			return '#d91b5b';
+	case "yellow":
+			return '#e3ba22';
+	}
+	
+	return '#be1e2d';
+}
+
+function modifySubPhrase(){
+    currentSubjectPhrase = (currentSubjectPhrase-1)%9
+    if(currentVerbPhrase == 0||currentVerbPhrase == 1|| currentVerbPhrase == 2){
+        return "about " + subjectPhrases[currentSubjectPhrase];
+    }
+    else{
+        if(currentSubjectPhrase>1){
+            return subjectPhrases[currentSubjectPhrase];
+        }
+        else{
+            currentSubjectPhrase = 2;
+            return subjectPhrases[currentSubjectPhrase];
+        }
+    }
+	
+	return "NULL";
+}
+
+function getImage(){
+    var currentPhrase = (currentNounPhrase-1)%11
+    switch(currentPhrase){
+			
+        case 0:
+            $('#imageOption').css('background-image', 'none');
+            //alert('image option zero is working');
+            break;
+        case 1:
+			console.log("getImage() is returning 1");
+            return "http://i62.tinypic.com/2ilhhme.png"; //absolute path in static, relative path in node e.g. ../img/shark.png
+            //alert('image option zero is working');
+            break;
+        case 2:
+			console.log("getImage() is returning 2");
+            return "http://i60.tinypic.com/2ro14j4.png"; //wave
+            //alert('image option zero is working');
+            break;
+        case 3:
+			console.log("getImage() is returning 3");
+            return "http://i57.tinypic.com/2i9g6u.png"; //crime
+            //alert('image option zero is working');
+            break;
+        case 4:
+			console.log("getImage() is returning 4");
+            return  "http://i59.tinypic.com/11c6y6b.png";
+            //alert('image option zero is working');
+            break;
+        case 5:
+			console.log("getImage() is returning 5");
+            return "http://i61.tinypic.com/jl5vue.png";
+            //alert('image option zero is working');
+            break;
+        case 6:
+			console.log("getImage() is returning 6");
+            return "http://i59.tinypic.com/2w1sjmv.png"; //carpet
+            //alert('image option zero is working');
+            break;
+        case 7:
+			console.log("getImage() is returning 7");
+           return "http://i61.tinypic.com/2gua8t0.jpg"; //surf
+            //alert('image option zero is working');
+            break;
+        case 8:
+			console.log("getImage() is returning 8");
+            return "http://i57.tinypic.com/t6sehf.png"; //flag
+            //alert('image option zero is working');
+            break;
+        case 9:
+			console.log("getImage() is returning 9");
+            return "http://i59.tinypic.com/11c6y6b.png"; //mother
+            //alert('image option zero is working');
+            break;
+        case 10:
+			console.log("getImage() is returning 10");
+            return "http://i61.tinypic.com/2wecly0.png"; //clock
+            //alert('image option zero is working');
+            break;
+        
+    }
+	console.log("getImage() is returning default case, should not happen");
+	return "http://i61.tinypic.com/2wecly0.png";
+}
+
+
+
+function sendMail(){
+	
+	console.log(nounPhrases[currentNounPhrase]);
+	console.log(verbPhrases[currentVerbPhrase]);
+	console.log(subjectPhrases[currentSubjectPhrase]);
+	
+	var rawHtml = '<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"><div style = "background-color: '+ getColor()+'; height: 700px; width: 1200px; background-image:url(' + getImage() +  ');background-position: left bottom;background-repeat: no-repeat;"><img src = "http://i61.tinypic.com/2rtkp.png" height= "30px" width = "auto" style = "margin: 15px;"><div style = "text-align: center; font-size: 35px; color: white;"><h1 style = "color: white;">' + nounPhrases[currentNounPhrase-1] + ' </h1><h1 style = "color: white;">and I want you to ' + verbPhrases[currentVerbPhrase-1] +'</h1><h1 style = "color: white;"> me ' + modifySubPhrase() + '</h1></div></div>';
+	console.log(rawHtml);
+	
+	var senderName = document.getElementById("senderName").value;
+	var receiverEmail = document.getElementById("receiverEmail").value;
+	var receiverName = document.getElementById("receiverName").value;
+	
+  $.ajax({
+    type: "POST",
+    url: "https://mandrillapp.com/api/1.0/messages/send.json",
+    data: {
+      'key': 'eMSqdATj1O_p4lAQTeY8Kg',
+      'message': {
+        'from_email': 'BloodBud@BloodBud.com',
+        'to': [
+          {
+            'email': receiverEmail,
+            'name': receiverName,
+            'type': 'to'
+          }
+        ],
+        'subject': senderName,
+        'html': 	rawHtml
+      }
+    }
+  });
+	
+	document.getElementById("createAnother").innerHTML = "Create another card";
+	$("#thankYouText").css('display','inline-block');
+	$("#replaceText").css('visibility','hidden');
+	$("#replaceSendText").css('display','none');
+
+}
 
 
 
@@ -201,17 +342,6 @@ var PageTransitions = (function() {
 	};
 
 })();
-
-
-    <!------------------------------------------------------------------------------------------------- -->
-    <!------------------------------------------------------------------------------------------------- -->
-    <!------------------------------------------------------------------------------------------------- -->
-    <!------------------------------------------------------------------------------------------------- -->
-    <!------------------------------------------------------------------------------------------------- -->
-    <!------------------------------------------------------------------------------------------------- -->
-    <!------------------------------------------------------------------------------------------------- -->
-
-
 
 var PageTransitions = (function() {
 
@@ -346,9 +476,10 @@ $('#blueColorButton').click(function(){
     $(".md-content").css('color','#27a9e1');
     $("#blueColorButton").css('border-color','white');
     
-    $("#redColorButton").css('border-color','be1e2d');
-    $("#yellowColorButton").css('border-color','e3ba22');
-    $("#pinkColorButton").css('border-color','d91b5b');
+    $("#redColorButton").css('border-color','#be1e2d');
+    $("#yellowColorButton").css('border-color','#e3ba22');
+    $("#pinkColorButton").css('border-color','#d91b5b');
+	currentColor = "blue";
     
     //$("#blueColorButton").css('outline-style','solid');
     //$("#blueColorButton").css('outline-width','5px');
@@ -362,9 +493,10 @@ $('#pinkColorButton').click(function(){
     $(".md-content").css('color','#d91b5b');
     
     $("#pinkColorButton").css('border-color','white');
-    $("#redColorButton").css('border-color','be1e2d');
-    $("#yellowColorButton").css('border-color','e3ba22');
-    $("#blueColorButton").css('border-color','27a9e1');
+    $("#redColorButton").css('border-color','#be1e2d');
+    $("#yellowColorButton").css('border-color','#e3ba22');
+    $("#blueColorButton").css('border-color','#27a9e1');
+	currentColor = "pink";
 });
 
 $('#yellowColorButton').click(function(){
@@ -373,9 +505,10 @@ $('#yellowColorButton').click(function(){
     $(".md-content").css('color','#e3ba22');
     
         $("#yellowColorButton").css('border-color','white');
-    $("#redColorButton").css('border-color','be1e2d');
-    $("#pinkColorButton").css('border-color','d91b5b');
-    $("#blueColorButton").css('border-color','27a9e1');
+    $("#redColorButton").css('border-color','#be1e2d');
+    $("#pinkColorButton").css('border-color','#d91b5b');
+    $("#blueColorButton").css('border-color','#27a9e1');
+	currentColor = "yellow";
 });
 
 $('#redColorButton').click(function(){
@@ -384,24 +517,22 @@ $('#redColorButton').click(function(){
     $(".md-content").css('color','#be1e2d');
     
     $("#redColorButton").css('border-color','white');
-    $("#yellowColorButton").css('border-color','e3ba22');
-    $("#pinkColorButton").css('border-color','d91b5b');
-    $("#blueColorButton").css('border-color','27a9e1');
+    $("#yellowColorButton").css('border-color','#e3ba22');
+    $("#pinkColorButton").css('border-color','#d91b5b');
+    $("#blueColorButton").css('border-color','#27a9e1');
+	currentColor = "red";
 });
 
 
 // CHANGE NOUN PHRASE ON CLICK
-var verbPhrases = ["Talk to", "Discuss with", "Explain to", "Buy", "Sell", "Give", "Lend"]
-var currentVerbPhrase = 0
 $('#verbPhrase').click(function(){
     currentVerbPhrase = currentVerbPhrase%7
     $('#verbPhrase').text(verbPhrases[currentVerbPhrase]);
     $('#verbPhrase').css('color', 'white');
     currentVerbPhrase++;
+	Console.log("current verb phrase is " + currentVerbPhrase + " " +verbPhrases[currentVerbPhrase]);
 });
 
-var subjectPhrases = ["It", "What to do", "Tampons", "Pads", "Pooter plugs", "Bloodplugs", "Rags", "P's", "T's"]
-var currentSubjectPhrase = 0
 
 $('#subjectPhrase').click(function(){
     $('#subjectPhrase').css('color', 'white');
@@ -418,7 +549,8 @@ $('#subjectPhrase').click(function(){
             $('#subjectPhrase').text(subjectPhrases[currentSubjectPhrase]);
         }
     }
-    currentSubjectPhrase++
+    currentSubjectPhrase++;
+	Console.log("current subject phrase is " + currentSubjectPhrase+ " " + subjectPhrases[currentSubjectPhrase]);
 });
 
 
@@ -478,4 +610,6 @@ $('#nounPhrase').click(function(){
         
     }
     currentNounPhrase++;
+	Console.log("current noun phrase is " + currentNounPhrase + " " + nounPhrases[currentNounPhrase]);
 });
+
